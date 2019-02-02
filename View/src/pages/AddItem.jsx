@@ -5,7 +5,7 @@ class AddItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemname: "",
+      name: "",
       description: "",
       price_day: "",
       price_hour: "",
@@ -25,12 +25,12 @@ class AddItem extends React.Component {
   }
 
   handleChange = event => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
     this.setState({
-      itemname: event.target.itemname,
-      description: event.target.description,
-      price_day: event.target.price_day,
-      price_hour: event.target.price_hour,
-      price_month: event.target.price_month
+      [name]: value
     });
   };
 
@@ -39,13 +39,13 @@ class AddItem extends React.Component {
       .post("http://localhost:8080/item/create", this.state)
       .then(function(response) {
         console.log(response);
-        //Perform action based on response
+        alert("Vasi predmet byl pridan");
       })
       .catch(function(error) {
         console.log(error);
-        //Perform action based on error
+        alert("Nepodarilo se pridat predmet");
       });
-    alert("Vasi registraci predmetu : " + this.state.itemname);
+    
     event.preventDefault();
   }
 
@@ -65,7 +65,8 @@ class AddItem extends React.Component {
             Jmeno:
             <input
               type="text"
-              value={this.state.itemname}
+              name = "name"
+              value={this.state.name}
               onChange={this.handleChange}
             />
           </label>
@@ -75,6 +76,7 @@ class AddItem extends React.Component {
             Popis:
             <input
               type="text"
+              name = "description"
               value={this.state.description}
               onChange={this.handleChange}
             />
@@ -85,6 +87,7 @@ class AddItem extends React.Component {
             Cena za den:
             <input
               type="text"
+              name = "price_day"
               value={this.state.price_day}
               onChange={this.handleChange}
             />
@@ -95,6 +98,7 @@ class AddItem extends React.Component {
             Cena za hodinu:
             <input
               type="text"
+              name = "price_hour"
               value={this.state.price_hour}
               onChange={this.handleChange}
             />
@@ -105,6 +109,7 @@ class AddItem extends React.Component {
             Cena za mesic:
             <input
               type="text"
+              name = "price_month"
               value={this.state.price_month}
               onChange={this.handleChange}
             />

@@ -5,7 +5,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
+      name: "",
       surname: "",
       email: "",
       password: "",
@@ -26,17 +26,17 @@ class Register extends React.Component {
   }
 
   handleChange = event => {
-    //alert("Vasi registraci vyrizujeme : " + this.state.email);
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const inputname = target.name;
+
     this.setState({
-      telephone: event.target.telephone,
-      surname: event.target.surname,
-      password: event.target.password,
-      email: event.target.email,
-      firstname: event.target.firstname
+      [inputname]: value
     });
   };
 
   handleSubmit(event) {
+    console.log(this.state);
     axios
       .post("http://localhost:8080/user/register", this.state)
       .then(function(response) {
@@ -70,7 +70,8 @@ class Register extends React.Component {
             Name:
             <input
               type="text"
-              value={this.state.firstname}
+              name = "name"
+              value={this.state.name}
               onChange={this.handleChange}
             />
           </label>
@@ -80,6 +81,7 @@ class Register extends React.Component {
             Surname:
             <input
               type="text"
+              name = "surname"
               value={this.state.surname}
               onChange={this.handleChange}
             />
@@ -90,6 +92,7 @@ class Register extends React.Component {
             Email:
             <input
               type="email"
+              name = "email"
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -100,6 +103,7 @@ class Register extends React.Component {
             Password:
             <input
               type="password"
+              name = "password"
               value={this.state.password}
               onChange={this.handleChange}
             />
@@ -110,6 +114,7 @@ class Register extends React.Component {
             Telephone:
             <input
               type="text"
+              name = "telephone"
               value={this.state.telephone}
               onChange={this.handleChange}
             />

@@ -17,8 +17,9 @@ class Items2 extends React.Component {
         result => {
           this.setState({
             isLoaded: true,
-            items: result.items
+            items: result
           });
+          console.log(result);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -42,8 +43,10 @@ class Items2 extends React.Component {
       return (
         <ul>
           {items.map(item => (
-            <li key={item.name}>
-              {item.name} {item.description}
+            <li key={item.id}>
+              <div>
+                {item.name} {item.description}
+              </div>
             </li>
           ))}
         </ul>

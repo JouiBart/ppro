@@ -11,30 +11,37 @@ class Login extends React.Component {
     this.login = this.login.bind(this);
 
     this.state = {
-      password: "",
-      telephone: ""
+      password: '',
+      email: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
     this.setState({
-      password: event.target.password,
-      email: event.target.email
+      [name]: value
     });
+     
   };
 
   handleSubmit(event) {
+    console.log(this.state);
     axios
       .post("http://localhost:8080/user/login", this.state)
       .then(function(response) {
-        console.log(response);
-        if (response != null) {
-          fakeAuth.authenticate(() => {
-            this.setState({ redirectToReferrer: true });
-          });
+        console.log(response.data);
+        if (response.data.id > 0) {
+          this.login(); 
+        } else {
+          alert(
+            "Bohuzel se nepovedlo prihlasit (spatne heslo nebo jmeno) : "
+          );
         }
       })
       .catch(function(error) {
@@ -44,7 +51,7 @@ class Login extends React.Component {
             this.state.telephone
         );
       });
-    alert("Vasi registraci vyrizujeme : " + this.state.telephone);
+
     event.preventDefault();
   }
 
@@ -72,6 +79,7 @@ class Login extends React.Component {
               Email:
               <input
                 type="email"
+                name="email"
                 value={this.state.email}
                 onChange={this.handleChange}
               />
@@ -82,6 +90,7 @@ class Login extends React.Component {
               Heslo:
               <input
                 type="password"
+                name="password"
                 value={this.state.password}
                 onChange={this.handleChange}
               />
