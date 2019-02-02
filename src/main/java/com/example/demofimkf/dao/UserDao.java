@@ -1,6 +1,7 @@
 package com.example.demofimkf.dao;
 
 import com.example.demofimkf.domain.User;
+import com.example.demofimkf.helpers.LoginViewModel;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface UserDao {
      * Najde a zkontroluje uzivatele
      * @return uzivatele, jinak null
      */
-    User login(String email, String password);
+    User login( LoginViewModel emailPassword);
 }

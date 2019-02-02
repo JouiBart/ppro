@@ -1,6 +1,8 @@
 package com.example.demofimkf.dao;
 
 import com.example.demofimkf.domain.User;
+import com.example.demofimkf.helpers.LoginViewModel;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,14 +29,16 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public User login(String email, String password) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE email = :email", User.class);
-        query.setParameter("email", email);
-        User user = query.getSingleResult();
-        if(user.getPassword() == password)
-            return user;
-
-        return new User();
+    public User login(LoginViewModel emailPassword) {
+        try
+        {
+            return em.createQuery("SELECT u FROM User u WHERE email = :email AND password = :password", User.class)
+                    .setParameter("email", emailPassword.getEmail())
+                    .setParameter("password", emailPassword.getPassword()).getSingleResult();
+        } catch( Exception e)
+        {
+           return new User();
+        }
     }
 
 }

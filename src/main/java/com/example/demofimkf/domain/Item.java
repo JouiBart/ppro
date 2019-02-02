@@ -13,7 +13,7 @@ public class Item {
     private float price_day;
     private float price_hour;
     private float price_month;
-    private boolean delete;
+    private boolean isdeleted;
 
     public Item() {
     }
@@ -67,11 +67,11 @@ public class Item {
         this.price_month = price_month;
     }
 
-    public boolean isDelete() {
-        return delete;
+    public boolean isIsdeleted() {
+        return isdeleted;
     }
 
-    public void setDelete(boolean delete) {
-        this.delete = delete;
+    public void setIsdeleted(boolean isdeleted) {
+        this.isdeleted = isdeleted;
     }
 }
