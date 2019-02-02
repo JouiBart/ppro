@@ -7,19 +7,18 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserRestController {
     @Autowired
     private UserDao dao;
 
     @PostMapping("/user/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public User loginUsers(@RequestBody LoginViewModel emailPassword) {
         try {
             return dao.login(emailPassword);
@@ -31,6 +30,7 @@ public class UserRestController {
     }
 
     @PostMapping("/user/register")
+    @CrossOrigin(origins = "http://localhost:3000")
     public void registerUser(@RequestBody User user) {
         dao.create(user);
     }
